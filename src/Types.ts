@@ -9,6 +9,7 @@ interface Friend {
 }
 interface ListSectionProps {
     friend: Friend;
+    index: number;
     friends: Friend[];
     setFriends: Dispatch<SetStateAction<Friend[]>>;
 }

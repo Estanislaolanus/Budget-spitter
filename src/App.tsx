@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuid } from "uuid";
 import ListSection from './components/ListSection/ListSection';
 import { Friend } from './Types';
@@ -45,12 +45,12 @@ function App() {
     <>
       <h1 className=' p-3 mt-4 mx-auto text-4xl w-fit font-semibold'>Split <span className=' text-[#4040f7]'>Budget</span></h1>
       <div className='w-[100vw] flex flex-col items-center gap-6 justify-center mt-8 mb-8'>
-        <div className='flex flex-col gap-8 bg-[#e0e6f5] h-fit p-6 rounded-2xl'>
+        <div className='flex flex-col gap-8 bg-[#e0e6f5] h-fit p-6 rounded-2xl w-96'>
           <div className="flex flex-col justify-center items-center gap-5">
             {
-              friends.map(f => {
+              friends.map((f, i) => {
                 return (
-                  <ListSection key={f.id} friend={f} setFriends={setFriends} friends={friends} />
+                  <ListSection key={f.id} friend={f} index={i} setFriends={setFriends} friends={friends} />
                 )
               })
             }
@@ -59,46 +59,40 @@ function App() {
             <span>Add friend</span>
           </button>
         </div>
-
         <button className='w-60 p-2 rounded-2xl bg-[#4040f7] text-[#fff] font-semibold hover:bg-[#3131f9] transition-all' onClick={() => calculateResult()}>
           Calculate slpit
         </button>
       </div>
       {
         result &&
-        <div className=' w-96 bg-[#e0e6f5] mx-auto p-3 rounded-2xl flex justify-center gap-8 mb-8'>
-          <div>
-            <h2 className=' text-3xl'>Debtors</h2>
-            {
-              friends.filter(f => f.debt !== 0).map(f => {
-                return (
-                  <div key={f.id}>
-                    <div>
-                      {f.name}
-                    </div>
-                    <div>
-                      <span>Debt:</span>
-                      <span>{f.debt}</span>
-                    </div>
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div>
-            <h2 className=' text-3xl'>Creditors</h2>
+        <div className=' w-80 bg-[#e0e6f5] mx-auto p-6 rounded-2xl flex justify-center gap-8 mb-8'>
+          <div className='flex flex-col gap-4 items-center'>
+            <h2 className=' text-3xl font-semibold'>Debtors</h2>
             <div>
+
+              {
+                friends.filter(f => f.debt !== 0).map(f => {
+                  return (
+                    <div className='flex gap-2' key={f.id}>
+
+                      <span className='font-semibold'>{f.name}</span>
+                      <span className='text-[#4040f7] font-bold'>${f.debt}</span>
+
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
+          <div className='flex flex-col gap-4 items-center'>
+            <h2 className=' text-3xl font-semibold'>Creditors</h2>
+            <div >
               {
                 friends.filter(f => f.receive !== 0).map(f => {
                   return (
-                    <div key={f.id}>
-                      <div>
-                        {f.name}
-                      </div>
-                      <div>
-                        <span>Receive:</span>
-                        <span>{Math.abs(f.receive)}</span>
-                      </div>
+                    <div className='flex gap-2' key={f.id}>
+                      <span className='font-semibold'>{f.name}</span>
+                      <span className='text-[#4040f7] font-bold'>${Math.abs(f.receive)}</span>
                     </div>
                   )
                 })
