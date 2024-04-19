@@ -19,8 +19,10 @@ function App() {
   const calculateResult = () => {
     let tolalSpent = 0;
     for (const friend of friends) {
+      if (friend.name === '') return tolalSpent = -1;
       tolalSpent += friend.amount;
     }
+    if (tolalSpent === -1) return;
     const splitAmount = tolalSpent / friends.length;
     for (let i = 0; i < friends.length; i++) {
       const friend = friends[i];
@@ -44,8 +46,8 @@ function App() {
   return (
     <>
       <h1 className=' p-3 mt-4 mx-auto text-4xl w-fit font-semibold'>Split <span className=' text-[#4040f7]'>Budget</span></h1>
-      <div className='w-[100vw] flex flex-col items-center gap-6 justify-center mt-8 mb-8'>
-        <div className='flex flex-col gap-8 bg-[#e0e6f5] h-fit p-6 rounded-2xl w-96'>
+      <div className='w-[100vw] flex flex-col items-center gap-6 justify-center mt-8 mb-7'>
+        <div className='flex flex-col gap-8 bg-[#e0e6f5] h-fit p-6 rounded-2xl w-[300px] sm:w-96'>
           <div className="flex flex-col justify-center items-center gap-5">
             {
               friends.map((f, i) => {
